@@ -95,21 +95,11 @@ void execute() {
             Logger::log("Прощайте, сир.\n");
             return;
         }else if(args[0] == "chatinfo" || args[0] == "инфа" || args[0] == "информация") {
-            if(args.size() < 2) {
-                error("Формат команды: chatinfo <id чата>");
+            if(!VKAPI::getReader().hasSelectedDialogue()) {
+                error("Для начала, выберите диалог.");
                 continue;
             }
-            int id = stoi(args[1]);
-            if(id > 0) {
-                error("Эту команду нельзя применять к общим чатам.");
-                continue;
-            }
-            id = -id;
-            if(!VKAPI::getDialogues().contains(id)) {
-                error("Этот чат отсутствует в кеше.");
-                continue;
-            }
-            Dialogue& dialogue = VKAPI::getDialogues().getCached(id);
+            Dialogue& dialogue = VKAPI::getReader().getSelectedDialogue();
             VKAPI::getUsers().load(dialogue.getParticipants());
             VKAPI::getUsers().updateAllOldCachedUsers();
             string participants = "";
@@ -120,13 +110,33 @@ void execute() {
             }
             participants += ".";
             Logger::log("Информация о чате с номером %d:\nНазвание: '%s'\nРазмер: %d\nСписок участников: %s\n",
-                    id, dialogue.getTitle().c_str(), dialogue.getSize(), participants.c_str());
+                    dialogue.getId(), dialogue.getTitle().c_str(), dialogue.getSize(), participants.c_str());
         }else if(args[0] == "debug") {
             GlobalSettings::toggleDebugMode();
             Logger::log("Debug mode toggled (:");
         }else if(args[0] == "update") {
             update();
             Logger::log("Обновляю все, что есть..\n");
+        }else if(args[0] == "прикрепи" || args[0] == "перешли") {
+            if(args.size() < 1) {
+                error("Для написания сообщения с пересланными нужен хотя бы 1 аргумент.");
+                continue;
+            }
+            if(!VKAPI::getReader().hasSelectedDialogue()) {
+                error("Чтобы писать сообщения, необходимо выбрать диалог.");
+                continue;
+            }
+            Dialogue& selected = VKAPI::getReader().getSelectedDialogue();
+            string forwarded = args[1], message, spaced;
+            for(int i = 2; i < args.size(); ++i) {
+                if(message.length() > 0) {
+                    message += "%20";
+                    spaced += " ";
+                }
+                message += args[i];
+                spaced += args[i];
+            }
+            selected.sendMessageForwarded(forwarded, message);
         }else {
             if(args.size() < 1) {
                 error("Для написания сообщения нужно хотя бы 1 слово.");

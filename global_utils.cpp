@@ -27,6 +27,12 @@ void GlobalUtils::sendMessageTo(bool multiChat, int id, string msg) {
     json.parseFromVkApi("messages.send?message=" + msg + "&" + param + "_id=" + to_string(id));
 }
 
+void GlobalUtils::sendMessageForwardedTo(bool multiChat, int id, string forwarded, string msg) {
+    JsonObject json;
+    string param = multiChat ? "chat" : "user";
+    json.parseFromVkApi("messages.send?message=" + msg + "&" + param + "_id=" + to_string(id) + "&forward_messages=" + forwarded);
+}
+
 string GlobalUtils::ios(int i) {
     string s = to_string(i);
     if(s.length() == 1)

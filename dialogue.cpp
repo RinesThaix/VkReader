@@ -7,11 +7,16 @@
 #include "global_utils.h"
 #include "vk_api.h"
 #include <string>
+#include <vector>
 #include "message.h"
 #include "logger.h"
 
 void Dialogue::sendMessage(string msg) {
     GlobalUtils::sendMessageTo(isMultiChat(), getId(), msg);
+}
+
+void Dialogue::sendMessageForwarded(string forwarded, string msg) {
+    GlobalUtils::sendMessageForwardedTo(isMultiChat(), getId(), forwarded, msg);
 }
 
 void Dialogue::loadMessages(int count, int startMessageId) {
@@ -61,7 +66,8 @@ void Dialogue::printLastMessages() {
         return;
     for(auto msgptr : getMessages()) {
         Message message = *msgptr;
-        Logger::log("%s (%s): %s\n",
+        Logger::log("[%d] %s (%s): %s\n",
+                message.getId(),
                 message.getSender().getFullName().c_str(),
                 GlobalUtils::formatTime(message.getTime()).c_str(),
                 message.getText().c_str()

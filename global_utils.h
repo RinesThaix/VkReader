@@ -34,6 +34,15 @@ public:
     static void sendMessageTo(bool multiChat, int id, string msg);
     
     /**
+     * Отправить сообщение в указанную беседу с пересланными другими сообщениями.
+     * @param multiChat true, если указанная беседа является мульти-чатом (то есть не разговором 1х1).
+     * @param id идентификатор беседы.
+     * @param forwarded идентификаторы пересылаемых сообщений, разделенные запятой.
+     * @param msg сообщение.
+     */
+    static void sendMessageForwardedTo(bool multiChat, int id, string forwarded, string msg);
+    
+    /**
      * Форматирование метки времени в читабельную строку.
      * @param time время.
      * @return строку вида dd.MM.yy hh:mm:ss.
