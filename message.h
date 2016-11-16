@@ -10,6 +10,8 @@
 
 class Message {
     
+    friend class Dialogue;
+    
 private:
     User sender;
     string text;
@@ -19,6 +21,11 @@ public:
     
     Message(User& sender, string text, long long int time) {
         this->sender = sender;
+        this->text = text;
+        this->time = time;
+    }
+    
+    Message(string text, long long int time) {
         this->text = text;
         this->time = time;
     }

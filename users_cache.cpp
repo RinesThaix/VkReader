@@ -8,8 +8,6 @@
 #include <string>
 #include <map>
 #include <rapidjson/document.h>
-#include "logger.h"
-#include "vk_api.h"
 
 using namespace std;
 
@@ -63,17 +61,26 @@ void UsersCache::update(User& user) {
     json.loadJsonObject(json, 0);
     user.online = json.getBoolean("online");
     user.status = json.getString("status");
-    users[user.getId()] = user;
     json.invalidate();
 }
 
 void UsersCache::update(vector<int> ids) {
+    string s = "";
+    for(int id : ids) {
+        if(!contains(id))
+            continue;
+        if(s.length() > 0)
+            s += ",";
+        s += to_string(id);
+    }
     JsonObject json, sub;
     json.parseFromVkApi("users.get?user_ids=" + s + "&fields=status,online");
     json.loadJsonObject(json, "response");
     for(int i = 0; i < json.getArraySize(); ++i) {
         json.loadJsonObject(sub, i);
         int id = sub.getInt("uid");
+        if(!contains(id))
+            continue;
         User& user = getCached(id);
         user.status = sub.contains("status") ? sub.getString("status") : "";
         user.online = sub.getBoolean("online");
@@ -116,6 +123,8 @@ void UsersCache::updateAllOldCachedUsers() {
     for(int i = 0; i < json.getArraySize(); ++i) {
         json.loadJsonObject(sub, i);
         int id = sub.getInt("uid");
+        if(!contains(id))
+            continue;
         User& user = getCached(id);
         user.status = sub.contains("status") ? sub.getString("status") : "";
         user.online = sub.getBoolean("online");
