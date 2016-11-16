@@ -14,8 +14,11 @@ class JsonRetriever {
     
 public:
     
-    /*
-     * Returns JsonObject which represents a json, parsed from the given url
+    /**
+     * Пропарсить Json с указанной ссылки.
+     * @param json объект JsonObject, куда записать результат.
+     * @param url ссылка, по которой находится искомая информация в формате json.
+     * @return ссылку на переданный json-объект.
      */
     static JsonObject& parseUrlToJsonObject(JsonObject& json, std::string url);
     

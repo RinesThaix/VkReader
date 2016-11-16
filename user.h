@@ -114,6 +114,14 @@ public:
         return lastUpdateTime;
     }
     
+    /**
+     * Проверка на то, нужно ли пользователя обновить в кеше.
+     * @return true, если пользователя нужно обновить.
+     */
+    bool isNeedsToBeUpdated() {
+        return time(0) - lastUpdateTime > 120;
+    }
+    
 };
 
 #endif /* USER_H */

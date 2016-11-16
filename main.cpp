@@ -102,7 +102,8 @@ void execute() {
             Dialogue& selected = VKAPI::getDialogues().getSelectedDialogue();
             selected.loadMessages();
             Logger::log("Последние сообщения из '%s':\n", selected.getTitle().c_str());
-            for(Message message : selected.getMessages()) {
+            for(shared_ptr<Message> ptr : selected.getMessages()) {
+                Message message = *ptr.get();
                 Logger::log("%s (%s): %s\n", message.getSender().getFullName().c_str(),
                         GlobalUtils::formatTime(message.getTime()).c_str(), message.getText().c_str());
             }
@@ -140,7 +141,7 @@ void execute() {
             Logger::log("Debug mode toggled (:");
         }else if(args[0] == "update") {
             update();
-            Logger::log("Обновляю все, что есть..");
+            Logger::log("Обновляю все, что есть..\n");
         }
     }
 }

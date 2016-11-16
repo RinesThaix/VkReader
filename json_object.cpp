@@ -55,10 +55,6 @@ int JsonObject::getInt(string name) {
     return getValue(json, name).GetInt();
 }
 
-long long int JsonObject::getLong(string name) {
-    return getValue(json, name).GetInt64();
-}
-
 double JsonObject::getDouble(string name) {
     return getValue(json, name).GetDouble();
 }

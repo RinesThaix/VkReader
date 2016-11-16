@@ -83,6 +83,7 @@ void DialoguesCache::invalidate(int id) {
 void DialoguesCache::invalidateAll() {
     for(auto iterator = dialogues.begin(); iterator != dialogues.end(); ++iterator)
         delete &(iterator->second);
+    dialogues.clear();
 }
 
 Dialogue& DialoguesCache::selectDialogue(int idInMap) {

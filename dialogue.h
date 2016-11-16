@@ -21,7 +21,7 @@ private:
     bool readState;
     vector<int> participants;
     string title;
-    vector<Message> messages;
+    vector<shared_ptr<Message>> messages;
     
 public:
     
@@ -66,6 +66,10 @@ public:
         return participants.size();
     }
     
+    /**
+     * Получить всех участников беседы.
+     * @return вектор идентификаторов всех участников беседы.
+     */
     vector<int> getParticipants() {
         return participants;
     }
@@ -78,12 +82,23 @@ public:
         return title;
     }
     
+    /**
+     * Отправить сообщение в беседу.
+     * @param msg сообщение.
+     */
     void sendMessage(string msg);
     
-    vector<Message> getMessages() {
+    /**
+     * Получить последние сообщения беседы.
+     * @return вектор указателей последних сообщений беседы.
+     */
+    vector<shared_ptr<Message>> getMessages() {
         return messages;
     }
     
+    /**
+     * Загрузить последние сообщения беседы.
+     */
     void loadMessages();
     
 };

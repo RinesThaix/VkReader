@@ -29,7 +29,7 @@ void Dialogue::loadMessages() {
         int uid = sub.getInt("uid");
         if(!VKAPI::getUsers().contains(uid))
             VKAPI::getUsers().load(uid);
-        Message* message = new Message(VKAPI::getUsers().getCached(uid), sub.getString("body"), sub.getInt("date"));
-        messages[messages.size() - i] = *message;
+        shared_ptr<Message> message = shared_ptr<Message>(new Message(VKAPI::getUsers().getCached(uid), sub.getString("body"), sub.getInt("date")));
+        messages[messages.size() - i] = message;
     }
 }
