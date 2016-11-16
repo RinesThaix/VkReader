@@ -10,10 +10,6 @@
 
 class DialoguesCache {
     
-private:
-    Dialogue selectedDialogue;
-    bool selDialogue = false;
-    
 public:
     std::map<int, Dialogue&> dialogues;
     
@@ -25,15 +21,7 @@ public:
     
     Dialogue& getCached(int id);
     
-    Dialogue& getSelectedDialogue() {
-        return selectedDialogue;
-    }
-    
     Dialogue& selectDialogue(int idInMap);
-    
-    bool hasSelectedDialogue() {
-        return selDialogue;
-    }
     
     void invalidate(Dialogue& dialogue);
     

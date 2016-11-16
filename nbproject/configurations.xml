@@ -5,6 +5,8 @@
                    displayName="Исходные файлы"
                    projectFiles="true">
       <logicalFolder name="f2" displayName="api" projectFiles="true">
+        <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.cpp</itemPath>
+        <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.h</itemPath>
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogue.cpp</itemPath>
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogue.h</itemPath>
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogues_cache.cpp</itemPath>
@@ -26,6 +28,7 @@
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/json_retriever.cpp</itemPath>
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/json_retriever.h</itemPath>
         <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/logger.h</itemPath>
+        <itemPath>/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/readwrite_lock.h</itemPath>
       </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -67,6 +70,16 @@
           <commandLine>-lcurl</commandLine>
         </ccTool>
       </compileType>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogue.cpp"
             ex="false"
             tool="1"
@@ -133,6 +146,11 @@
             flavor2="0">
       </item>
       <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/message.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/readwrite_lock.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -186,6 +204,16 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogue.cpp"
             ex="false"
             tool="1"
@@ -252,6 +280,11 @@
             flavor2="0">
       </item>
       <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/message.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/readwrite_lock.h"
             ex="false"
             tool="3"
             flavor2="0">

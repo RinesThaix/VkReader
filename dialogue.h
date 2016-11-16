@@ -22,6 +22,8 @@ private:
     vector<int> participants;
     string title;
     vector<shared_ptr<Message>> messages;
+    vector<int> readMessages;
+    int lastReadMessageId = 0;
     
 public:
     
@@ -98,8 +100,31 @@ public:
     
     /**
      * Загрузить последние сообщения беседы.
+     * @param count количество сообщений.
      */
-    void loadMessages();
+    void loadMessages(int count, int startMessageId);
+    
+    /**
+     * Проверка, является ли сообщение прочитанным в данной сессии.
+     * @param mid идентификатор сообщения
+     * @return true, если сообщение было прочитано в течение данной сессии.
+     */
+    bool isMessageRead(int mid) {
+        return find(readMessages.begin(), readMessages.end(), mid) != readMessages.end();
+    }
+    
+    /**
+     * Выводит последние полученные сообщения.
+     */
+    void printLastMessages();
+    
+    /**
+     * Функция, позволяющая получить идентификатор последнего полученного сообщения из чата.
+     * @return идентификатор последнего полученного (и прочитанного) сообщения из чата.
+     */
+    int getLastReadMessageId() {
+        return lastReadMessageId;
+    }
     
 };
 

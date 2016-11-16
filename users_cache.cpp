@@ -28,6 +28,8 @@ void UsersCache::load(int id) {
 }
 
 void UsersCache::load(vector<int> ids) {
+    if(ids.size() == 0)
+        return;
     vector<int> toBeUpdated;
     string s = "";
     for(int id : ids) {
@@ -65,6 +67,8 @@ void UsersCache::update(User& user) {
 }
 
 void UsersCache::update(vector<int> ids) {
+    if(ids.size() == 0)
+        return;
     string s = "";
     for(int id : ids) {
         if(!contains(id))

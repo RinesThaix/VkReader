@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/57702798/async_reader.o \
 	${OBJECTDIR}/_ext/57702798/dialogue.o \
 	${OBJECTDIR}/_ext/57702798/dialogues_cache.o \
 	${OBJECTDIR}/_ext/57702798/global_settings.o \
@@ -69,6 +70,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vkreader: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vkreader ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/_ext/57702798/async_reader.o: /Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/57702798
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/include -I/Users/RinesThaix/Desktop/Coding/ifmo/VkReader/lib -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/57702798/async_reader.o /Users/RinesThaix/Desktop/Coding/ifmo/VkReader/async_reader.cpp
 
 ${OBJECTDIR}/_ext/57702798/dialogue.o: /Users/RinesThaix/Desktop/Coding/ifmo/VkReader/dialogue.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/57702798

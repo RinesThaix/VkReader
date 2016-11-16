@@ -90,9 +90,10 @@ Dialogue& DialoguesCache::selectDialogue(int idInMap) {
     int left = idInMap;
     for(auto iterator = dialogues.begin(); iterator != dialogues.end(); ++iterator)
         if(--left == 0) {
-            this->selDialogue = true;
-            return this->selectedDialogue = iterator->second;
+            Dialogue& result = iterator->second;
+            VKAPI::getReader().selectDialogue(result);
+            return result;
         }
-    this->selDialogue = false;
+    VKAPI::getReader().unselectDialogue();
     return *(Dialogue*) nullptr;
 }

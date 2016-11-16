@@ -23,12 +23,17 @@ void init() {
     curl_global_init(CURL_GLOBAL_DEFAULT);
     Logger::log("Preloading settings..\n");
     GlobalSettings::preloadSettings();
-    Logger::log("Loading self-info..\n");
+    Logger::log("Preloading information about your account..\n");
     VKAPI::getUsers().load(GlobalSettings::getMyId());
+    Logger::log("Preloading dialogues..\n");
     VKAPI::getDialogues().preload();
+    Logger::log("Initializing AsyncReader..\n");
+    VKAPI::getReader().init();
+    Logger::log("VkReader has been successfully initialized!\n");
 }
 
 void cleanup() {
+    Logger::log("Shutting down everything..\n");
     VKAPI::invalidate();
     curl_global_cleanup();
 }
@@ -59,57 +64,37 @@ void execute() {
         if(cmd.length() == 0)
             continue;
         vector<string> args = GlobalUtils::split(cmd, ' ');
-        if(args[0] == "listchats") {
+        if(args[0] == "чаты" || args[0] == "список") {
             printAllChats();
-        }else if(args[0] == "select") {
+        }else if(args[0] == "выбери" || args[0] == "выбрать") {
             if(args.size() < 2) {
-                error("Формат команды: select <номер>");
+                error("Формат команды: вебери <номер>");
                 continue;
             }
             int id = stoi(args[1]);
             Dialogue& selected = VKAPI::getDialogues().selectDialogue(id);
-            if(!VKAPI::getDialogues().hasSelectedDialogue()) {
+            if(!VKAPI::getReader().hasSelectedDialogue()) {
                 error("Диалога с таким номером нет.");
                 continue;
             }
             Logger::log("Вы перешли в чат '%s'\n", selected.getTitle().c_str());
-        }else if(args[0] == "send") {
-            if(args.size() < 2) {
-                error("Формат команды: send <сообщение>");
-                continue;
-            }
-            if(!VKAPI::getDialogues().hasSelectedDialogue()) {
-                error("Для начала, выберите диалог.");
-                continue;
-            }
-            Dialogue& selected = VKAPI::getDialogues().getSelectedDialogue();
-            string message, spaced;
-            for(int i = 1; i < args.size(); ++i) {
-                if(message.length() > 0) {
-                    message += "%20";
-                    spaced += " ";
-                }
-                message += args[i];
-                spaced += args[i];
-            }
-            selected.sendMessage(message);
-            Logger::log("Вы отправили сообщение '%s' в чат '%s'\n", spaced.c_str(), selected.getTitle().c_str());
         }else if(args[0] == "read") {
-            if(!VKAPI::getDialogues().hasSelectedDialogue()) {
+            if(!VKAPI::getReader().hasSelectedDialogue()) {
                 error("Для начала, выберите диалог.");
                 continue;
             }
-            Dialogue& selected = VKAPI::getDialogues().getSelectedDialogue();
-            selected.loadMessages();
+            Dialogue& selected = VKAPI::getReader().getSelectedDialogue();
+            selected.loadMessages(25, selected.getLastReadMessageId());
             Logger::log("Последние сообщения из '%s':\n", selected.getTitle().c_str());
-            for(shared_ptr<Message> ptr : selected.getMessages()) {
-                Message message = *ptr.get();
+            for(auto msgptr : selected.getMessages()) {
+                Message message = *msgptr;
                 Logger::log("%s (%s): %s\n", message.getSender().getFullName().c_str(),
                         GlobalUtils::formatTime(message.getTime()).c_str(), message.getText().c_str());
             }
-        }else if(args[0] == "end") {
+        }else if(args[0] == "end" || args[0] == "пока") {
+            Logger::log("Прощайте, сир.\n");
             return;
-        }else if(args[0] == "chatinfo") {
+        }else if(args[0] == "chatinfo" || args[0] == "инфа" || args[0] == "информация") {
             if(args.size() < 2) {
                 error("Формат команды: chatinfo <id чата>");
                 continue;
@@ -142,6 +127,26 @@ void execute() {
         }else if(args[0] == "update") {
             update();
             Logger::log("Обновляю все, что есть..\n");
+        }else {
+            if(args.size() < 1) {
+                error("Для написания сообщения нужно хотя бы 1 слово.");
+                continue;
+            }
+            if(!VKAPI::getReader().hasSelectedDialogue()) {
+                error("Чтобы писать сообщения, необходимо выбрать диалог.");
+                continue;
+            }
+            Dialogue& selected = VKAPI::getReader().getSelectedDialogue();
+            string message, spaced;
+            for(int i = 0; i < args.size(); ++i) {
+                if(message.length() > 0) {
+                    message += "%20";
+                    spaced += " ";
+                }
+                message += args[i];
+                spaced += args[i];
+            }
+            selected.sendMessage(message);
         }
     }
 }
