@@ -66,7 +66,7 @@ void Dialogue::printLastMessages() {
         return;
     for(auto msgptr : getMessages()) {
         Message message = *msgptr;
-        Logger::log("[%d] %s (%s): %s\n",
+        Logger::print("\n[%d] %s (%s):\n%s\n\n",
                 message.getId(),
                 message.getSender().getFullName().c_str(),
                 GlobalUtils::formatTime(message.getTime()).c_str(),

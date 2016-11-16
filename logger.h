@@ -28,6 +28,13 @@ public:
         cout << "Debug #" << id << endl;
     }
     
+    static void print(const char* message, ...) {
+        va_list argptr;
+        va_start(argptr, message);
+        vfprintf(stdout, message, argptr);
+        va_end(argptr);
+    }
+    
     static void log(const char* message, ...) {
         va_list argptr;
         va_start(argptr, message);
